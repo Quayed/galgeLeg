@@ -26,8 +26,8 @@ public class GameOverActivity extends Activity implements View.OnClickListener{
         gameOverImage = (ImageView) findViewById(R.id.gameOverImage);
 
         Intent i = getIntent();
-        boolean isGameWon = i.getBooleanExtra("isGameWon", false);
-        String word = i.getStringExtra("word");
+        boolean isGameWon = MainActivity.galgeLogik.erSpilletVundet();
+        String word = MainActivity.galgeLogik.getOrdet();
 
         if(isGameWon){
             gameOverText.setText("Tillyke du vandt! Ordet var " + word);

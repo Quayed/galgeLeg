@@ -2,6 +2,7 @@ package com.example.jonas.galgelegaflevering;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,9 +24,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         gameButton = (Button) findViewById(R.id.gameButton);
         rulesButton = (Button) findViewById(R.id.rulesButton);
-        if (galgeLogik == null){
-            galgeLogik = new Galgelogik();
-        }
+
         gameButton.setOnClickListener(this);
         rulesButton.setOnClickListener(this);
         findViewById(R.id.wordButton).setOnClickListener(new View.OnClickListener() {
@@ -34,6 +33,28 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 startActivity(new Intent(MainActivity.this, WordList.class));
             }
         });
+
+        if (galgeLogik == null){
+            galgeLogik = new Galgelogik();
+
+            new AsyncTask() {
+                protected Object doInBackground(Object... arg0) {
+                    try {
+                        MainActivity.galgeLogik.hentOrdFraDr();
+                        return "Ordene blev korrekt hentet fra DR's server";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        return "Ordene blev ikke hentet korrekt: "+e;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(Object resultat) {
+
+                    // info.setText("resultat: \n" + resultat);
+                }
+            }.execute();
+        }
     }
 
     @Override

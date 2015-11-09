@@ -42,8 +42,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         private void updateViews() {
                 if(MainActivity.galgeLogik.erSpilletSlut()){
                         Intent i = new Intent(this, GameOverActivity.class);
-                        i.putExtra("isGameWon", MainActivity.galgeLogik.erSpilletVundet());
-                        i.putExtra("word", MainActivity.galgeLogik.getOrdet());
                         startActivityForResult(i, gameOverRequestCode);
                 }
 
