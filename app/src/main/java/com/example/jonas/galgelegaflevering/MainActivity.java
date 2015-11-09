@@ -13,6 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements View.OnClickListener{
     Button gameButton;
     Button rulesButton;
+    static Galgelogik galgeLogik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +23,17 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
         gameButton = (Button) findViewById(R.id.gameButton);
         rulesButton = (Button) findViewById(R.id.rulesButton);
-
+        if (galgeLogik == null){
+            galgeLogik = new Galgelogik();
+        }
         gameButton.setOnClickListener(this);
         rulesButton.setOnClickListener(this);
+        findViewById(R.id.wordButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, WordList.class));
+            }
+        });
     }
 
     @Override

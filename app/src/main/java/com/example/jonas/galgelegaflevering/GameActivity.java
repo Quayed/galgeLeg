@@ -14,7 +14,7 @@ import org.w3c.dom.Text;
 public class GameActivity extends Activity implements View.OnClickListener{
         final int gameOverRequestCode = 1;
 
-        Galgelogik galgeLogik;
+
         EditText inputField;
         Button guessButton;
         TextView visibleWord;
@@ -28,8 +28,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
                 setContentView(R.layout.game_activity);
 
-                galgeLogik = new Galgelogik();
-
                 inputField = (EditText) findViewById(R.id.editText);
                 guessButton = (Button) findViewById(R.id.button);
                 visibleWord = (TextView) findViewById(R.id.visibleWord);
@@ -42,21 +40,21 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
 
         private void updateViews() {
-                if(galgeLogik.erSpilletSlut()){
+                if(MainActivity.galgeLogik.erSpilletSlut()){
                         Intent i = new Intent(this, GameOverActivity.class);
-                        i.putExtra("isGameWon", galgeLogik.erSpilletVundet());
-                        i.putExtra("word", galgeLogik.getOrdet());
+                        i.putExtra("isGameWon", MainActivity.galgeLogik.erSpilletVundet());
+                        i.putExtra("word", MainActivity.galgeLogik.getOrdet());
                         startActivityForResult(i, gameOverRequestCode);
                 }
 
                 inputField.setText("");
                 inputField.setError(null);
 
-                visibleWord.setText("Ordet du skal gætte: " + galgeLogik.getSynligtOrd());
+                visibleWord.setText("Ordet du skal gætte: " + MainActivity.galgeLogik.getSynligtOrd());
 
-                usedLetters.setText("Bogstaver du har brugt: " + galgeLogik.getBrugteBogstaver());
+                usedLetters.setText("Bogstaver du har brugt: " + MainActivity.galgeLogik.getBrugteBogstaver());
 
-                switch (galgeLogik.getAntalForkerteBogstaver()){
+                switch (MainActivity.galgeLogik.getAntalForkerteBogstaver()){
                         case 0:
                                 galge.setImageResource(R.drawable.galge);
                                 break;
@@ -95,7 +93,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                                         finish(); //player does not want to play again
                                 }else {
 
-                                        galgeLogik.nulstil();
+                                        MainActivity.galgeLogik.nulstil();
                                         updateViews();
                                 }
                         }
@@ -111,7 +109,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                         String guess = inputField.getText().toString();
 
                         if(!guess.isEmpty()) {
-                                galgeLogik.gætBogstav(guess.substring(0, 1));
+                                MainActivity.galgeLogik.gætBogstav(guess.substring(0, 1));
                                 updateViews();
                         }
                         else {
