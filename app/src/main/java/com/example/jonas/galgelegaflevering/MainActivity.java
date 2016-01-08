@@ -1,6 +1,7 @@
 package com.example.jonas.galgelegaflevering;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ public class MainActivity extends Activity{
                 .commit();
 
         if (galgeLogik == null){
-            galgeLogik = new Galgelogik();
+            galgeLogik = new Galgelogik(this);
 
             new AsyncTask() {
                 protected Object doInBackground(Object... arg0) {
@@ -40,7 +41,7 @@ public class MainActivity extends Activity{
 
                     // info.setText("resultat: \n" + resultat);
                 }
-            }.execute();
+            }.execute(this);
         }
     }
 }

@@ -11,7 +11,7 @@ public class RulesActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
+        
         setContentView(R.layout.rules_activity);
 
         backButton = (Button) findViewById(R.id.backButton);

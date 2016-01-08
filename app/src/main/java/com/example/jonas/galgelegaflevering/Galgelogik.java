@@ -1,5 +1,11 @@
 package com.example.jonas.galgelegaflevering;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +24,8 @@ public class Galgelogik {
   private boolean sidsteBogstavVarKorrekt;
   private boolean spilletErVundet;
   private boolean spilletErTabt;
-
+  private String DB_FULL_PATH;
+  private int numberOfWords;
 
   public ArrayList<String> getBrugteBogstaver() {
     return brugteBogstaver;
@@ -60,7 +67,8 @@ public class Galgelogik {
     return newStrings;
   }
 
-  public Galgelogik() {
+  public Galgelogik(Context context) {
+    DB_FULL_PATH = context.getFilesDir() + "/database.db";
     muligeOrd.add("bil");
     muligeOrd.add("computer");
     muligeOrd.add("programmering");
@@ -72,12 +80,28 @@ public class Galgelogik {
     nulstil();
   }
 
+  public String hentNytOrd(){
+    if(!checkDataBase()){
+      return muligeOrd.get(new Random().nextInt(muligeOrd.size()));
+    } else{
+      SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
+      Cursor cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
+      if(cursor != null)
+        cursor.moveToFirst();
+
+      String word = cursor.getString(1);
+      cursor.close();
+      db.close();
+      return word;
+    }
+  }
+
   public void nulstil() {
     brugteBogstaver.clear();
     antalForkerteBogstaver = 0;
     spilletErVundet = false;
     spilletErTabt = false;
-    ordet = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
+    ordet = hentNytOrd();
     opdaterSynligtOrd();
   }
 
@@ -143,15 +167,41 @@ public class Galgelogik {
   }
 
   public void hentOrdFraDr() throws Exception {
-    String data = hentUrl("http://dr.dk");
-    System.out.println("data = " + data);
+    if(!checkDataBase()){
+      // the database does not exist
+      String data = hentUrl("http://dr.dk");
+      System.out.println("data = " + data);
 
-    data = data.replaceAll("<.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");
-    System.out.println("data = " + data);
-    muligeOrd.clear();
-    muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
+      data = data.replaceAll("<.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");
+      System.out.println("data = " + data);
+      muligeOrd.clear();
+      muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
 
-    System.out.println("muligeOrd = " + muligeOrd);
-    nulstil();
+      System.out.println("muligeOrd = " + muligeOrd);
+      nulstil();
+
+      SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
+      db.execSQL("CREATE TABLE words (id INTEGER PRIMARY KEY, word TEXT NOT NULL, timesUsed INTEGER);");
+      numberOfWords = muligeOrd.size();
+      for(String ord : muligeOrd){
+        ContentValues values = new ContentValues();
+        values.put("word", ord);
+        values.put("timesUsed", 0);
+        db.insert("words", null, values);
+      }
+      db.close();
+    }
+  }
+
+  private boolean checkDataBase() {
+    SQLiteDatabase checkDB = null;
+    try {
+      checkDB = SQLiteDatabase.openDatabase(DB_FULL_PATH, null,
+              SQLiteDatabase.OPEN_READONLY);
+      checkDB.close();
+    } catch (SQLiteException e) {
+      // database doesn't exist yet.
+    }
+    return checkDB != null;
   }
 }
