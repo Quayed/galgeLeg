@@ -25,7 +25,6 @@ public class Galgelogik {
   private boolean spilletErVundet;
   private boolean spilletErTabt;
   private String DB_FULL_PATH;
-  private int numberOfWords;
 
   public ArrayList<String> getBrugteBogstaver() {
     return brugteBogstaver;
@@ -182,7 +181,6 @@ public class Galgelogik {
 
       SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
       db.execSQL("CREATE TABLE words (id INTEGER PRIMARY KEY, word TEXT NOT NULL, timesUsed INTEGER);");
-      numberOfWords = muligeOrd.size();
       for(String ord : muligeOrd){
         ContentValues values = new ContentValues();
         values.put("word", ord);
