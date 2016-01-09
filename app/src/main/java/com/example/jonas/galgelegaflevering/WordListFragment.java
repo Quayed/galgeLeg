@@ -11,10 +11,10 @@ import android.widget.ListView;
 /**
  * Created by jonas on 11/16/15.
  */
-public class WordListFragment extends Fragment{
+public class WordListFragment extends Fragment {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.wordlist_fragment, container, false);
 
         String[] words = MainActivity.galgeLogik.getMuligeOrd();

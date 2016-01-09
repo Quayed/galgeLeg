@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity {
     static Galgelogik galgeLogik;
 
     @Override
@@ -22,7 +22,7 @@ public class MainActivity extends Activity{
                 .add(R.id.fragmentContainer, new MainMenuFragment())
                 .commit();
 
-        if (galgeLogik == null){
+        if (galgeLogik == null) {
             galgeLogik = new Galgelogik(this);
 
             new AsyncTask() {
@@ -32,7 +32,7 @@ public class MainActivity extends Activity{
                         return "Ordene blev korrekt hentet fra DR's server";
                     } catch (Exception e) {
                         e.printStackTrace();
-                        return "Ordene blev ikke hentet korrekt: "+e;
+                        return "Ordene blev ikke hentet korrekt: " + e;
                     }
                 }
 

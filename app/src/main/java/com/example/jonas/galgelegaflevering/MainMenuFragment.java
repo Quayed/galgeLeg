@@ -12,13 +12,13 @@ import android.widget.Toast;
 /**
  * Created by jonas on 11/16/15.
  */
-public class MainMenuFragment extends Fragment implements View.OnClickListener{
+public class MainMenuFragment extends Fragment implements View.OnClickListener {
     Button gameButton;
     Button rulesButton;
     Button wordButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.menu_layout, container, false);
 
         gameButton = (Button) result.findViewById(R.id.gameButton);
@@ -34,23 +34,20 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        if(v == gameButton){
+        if (v == gameButton) {
             Intent i = new Intent(getActivity(), GameActivity.class);
             startActivity(i);
-        }
-        else if(v == rulesButton){
+        } else if (v == rulesButton) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new RulesFragment())
                     .addToBackStack(null)
                     .commit();
-        }
-        else if(v == wordButton){
+        } else if (v == wordButton) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new WordListFragment())
                     .addToBackStack(null)
                     .commit();
-        }
-        else{
+        } else {
             Toast.makeText(getActivity(), "Denne knap er ikke implementeret endnu", Toast.LENGTH_LONG).show();
         }
     }

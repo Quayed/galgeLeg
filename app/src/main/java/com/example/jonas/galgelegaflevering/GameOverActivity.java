@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GameOverActivity extends Activity implements View.OnClickListener{
+public class GameOverActivity extends Activity implements View.OnClickListener {
 
     TextView gameOverText;
     Button newGameButton;
@@ -29,10 +29,9 @@ public class GameOverActivity extends Activity implements View.OnClickListener{
         boolean isGameWon = MainActivity.galgeLogik.erSpilletVundet();
         String word = MainActivity.galgeLogik.getOrdet();
 
-        if(isGameWon){
+        if (isGameWon) {
             gameOverText.setText("Tillyke du vandt! Ordet var " + word);
-        }
-        else{
+        } else {
             gameOverText.setText("Øv du tabte. Ordet var " + word);
             gameOverImage.setImageResource(R.drawable.forkert6);
         }
@@ -45,10 +44,9 @@ public class GameOverActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         Intent i = new Intent();
 
-        if(v == newGameButton){
+        if (v == newGameButton) {
             i.putExtra("playAgain", true);
-        }
-        else if(v == endGameButton){
+        } else if (v == endGameButton) {
             i.putExtra("playAgain", false);
         }
 
