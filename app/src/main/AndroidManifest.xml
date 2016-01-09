@@ -21,10 +21,6 @@
         </activity>
         <activity android:name=".GameOverActivity" >
         </activity>
-        <activity
-            android:name=".WordList"
-            android:label="@string/title_activity_word_list" >
-        </activity>
     </application>
 
 </manifest>
