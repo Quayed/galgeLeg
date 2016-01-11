@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jonas.galgelegaflevering" >
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,12 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RulesActivity" >
-        </activity>
         <activity android:name=".GameActivity" >
         </activity>
         <activity android:name=".GameOverActivity" >
         </activity>
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="uUF5dvrAPz9xlmiILkF9hwXdnOIrgtWAQVKnSHmX" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="NpNwcs6edjz1k1KQchhr2y7YBRCsUhCfdlpesHdR" />
     </application>
 
 </manifest>
