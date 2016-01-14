@@ -64,6 +64,12 @@ public class GameActivity extends Activity implements View.OnClickListener {
         keyboard.add((Button) findViewById(R.id.btn28));
         keyboard.add((Button) findViewById(R.id.btn29));
 
+        Intent i = getIntent();
+
+        if(i.hasExtra("wordLength")){
+            MainActivity.galgeLogik.hentNytOrd(i.getIntExtra("wordLength", 0));
+        }
+
         for (Button btn : keyboard) {
             btn.setOnClickListener(this);
         }

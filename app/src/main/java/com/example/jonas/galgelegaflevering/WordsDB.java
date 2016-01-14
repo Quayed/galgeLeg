@@ -9,8 +9,15 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class WordsDB extends SQLiteOpenHelper {
 
+    public static final String DB_NAME = "wordsDB";
+
+    public static final int ID = 0;
+    public static final int WORD = 1;
+    public static final int TIMESUSED = 2;
+    public static final int WORDLENGTH = 3;
+
     public WordsDB(Context context){
-        super(context, "wordsDB", null, 1);
+        super(context, DB_NAME, null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {

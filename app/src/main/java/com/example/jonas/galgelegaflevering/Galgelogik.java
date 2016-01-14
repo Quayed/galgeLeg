@@ -83,12 +83,17 @@ public class Galgelogik {
         nulstil();
     }
 
-    public String hentNytOrd() {
+    public String hentNytOrd(int length) {
         if (!checkDataBase()) {
             return muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         } else {
             SQLiteDatabase db = dbHandler.getReadableDatabase();
-            Cursor cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
+            Cursor cursor = null;
+            if(length == 0) {
+                cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
+            }else {
+                cursor = db.rawQuery("SELECT * FROM words WHERE wordLength =? ORDER BY RANDOM() LIMIT 1", new String[]{String.valueOf(length)});
+            }
             String word = null;
             if (cursor != null){
                 if(cursor.moveToFirst())
@@ -96,9 +101,11 @@ public class Galgelogik {
                 cursor.close();
             }
             db.close();
-            if(word != null)
+            if(word != null) {
+                ordet = word;
+                opdaterSynligtOrd();
                 return word;
-            else
+            }else
                 return muligeOrd.get((int)(Math.random()*muligeOrd.size()));
         }
     }
@@ -108,7 +115,7 @@ public class Galgelogik {
         antalForkerteBogstaver = 0;
         spilletErVundet = false;
         spilletErTabt = false;
-        ordet = hentNytOrd();
+        ordet = hentNytOrd(0);
         opdaterSynligtOrd();
     }
 
@@ -225,7 +232,6 @@ public class Galgelogik {
     public ArrayList<Integer> getPossibleLengths(){
         if(possibleLengths == null){
             if (checkDataBase()) {
-                System.out.println("Getting from DB");
                 db = dbHandler.getReadableDatabase();
                 Cursor cursor = db.rawQuery("SELECT * FROM words", null);
 
@@ -240,8 +246,7 @@ public class Galgelogik {
 
                 cursor.moveToFirst();
                 do{
-//                    System.out.println(cursor.getString(1));
-                    counter[cursor.getInt(3)]++;
+                    counter[cursor.getInt(WordsDB.WORDLENGTH)]++;
                 }while(cursor.moveToNext());
                 cursor.close();
                 possibleLengths = new ArrayList<>();
