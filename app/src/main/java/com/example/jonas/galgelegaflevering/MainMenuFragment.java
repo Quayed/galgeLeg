@@ -1,11 +1,14 @@
 package com.example.jonas.galgelegaflevering;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -35,8 +38,21 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v == gameButton) {
-            Intent i = new Intent(getActivity(), GameActivity.class);
-            startActivity(i);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Test Popup").setTitle("Titel på pop up");
+            // TODO HANDLE NULL POINTER
+            builder.setAdapter(new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_list_item_1, MainActivity.galgeLogik.getPossibleLengths()),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.out.println(MainActivity.galgeLogik.getPossibleLengths().get(which));
+                            Intent i = new Intent(getActivity(), GameActivity.class);
+                            startActivity(i);
+                        }
+                    });
+            builder.create().show();
+
+
         } else if (v == rulesButton) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new RulesFragment())

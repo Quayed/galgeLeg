@@ -25,7 +25,7 @@ public class Galgelogik {
     private boolean spilletErVundet;
     private boolean spilletErTabt;
     private String DB_FULL_PATH;
-
+    private ArrayList<Integer> possibleLengths;
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
     }
@@ -182,7 +182,7 @@ public class Galgelogik {
 
             System.out.println("muligeOrd = " + muligeOrd);
             nulstil();
-
+            int[] counter = new int[12];
             SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
             db.execSQL("CREATE TABLE words (id INTEGER PRIMARY KEY, word TEXT NOT NULL, timesUsed INTEGER, wordLength INTEGER);");
             for (String ord : muligeOrd) {
@@ -194,6 +194,12 @@ public class Galgelogik {
                 values.put("timesUsed", 0);
                 values.put("wordLength", ord.length());
                 db.insert("words", null, values);
+                counter[ord.length()]++;
+            }
+            for(int i = 3; i < counter.length; i++){
+                if(counter[i] > 5){
+                    possibleLengths.add(i);
+                }
             }
             db.close();
         }
@@ -209,5 +215,32 @@ public class Galgelogik {
             // database doesn't exist yet.
         }
         return checkDB != null;
+    }
+
+    public ArrayList<Integer> getPossibleLengths(){
+        if(possibleLengths == null){
+            if (checkDataBase()) {
+                SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
+                Cursor cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
+
+                int[] counter = new int[12];
+
+                if (cursor == null)
+                    return null;
+
+                while (cursor.moveToFirst()){
+                    counter[cursor.getInt(4)]++;
+                }
+                for(int i = 3; i < counter.length; i++){
+                    if(counter[i] > 5){
+                        possibleLengths.add(i);
+                    }
+                }
+                db.close();
+                return possibleLengths;
+            }
+            return null;
+        } else
+            return possibleLengths;
     }
 }
