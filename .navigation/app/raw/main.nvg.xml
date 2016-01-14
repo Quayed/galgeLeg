@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.jonas.galgelegaflevering.GameActivity"/>
+      <point      
+        x = "2196"      
+        y = "-72"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.jonas.galgelegaflevering.GameOverActivity"/>
+      <point      
+        x = "2188"      
+        y = "1228"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.jonas.galgelegaflevering.RulesActivity"/>
+      <point      
+        x = "1136"      
+        y = "300"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.jonas.galgelegaflevering.MainActivity"/>
+      <point      
+        x = "52"      
+        y = "1128"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.example.jonas.galgelegaflevering.WordList"/>
+      <point      
+        x = "1332"      
+        y = "1160"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>

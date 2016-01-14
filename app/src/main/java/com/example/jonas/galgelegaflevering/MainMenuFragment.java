@@ -39,15 +39,15 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == gameButton) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Test Popup").setTitle("Titel på pop up");
+            builder.setTitle("Vælg den ønskede ord længde");
             // TODO HANDLE NULL POINTER
             if(MainActivity.galgeLogik.getPossibleLengths() != null) {
-                builder.setAdapter(new ArrayAdapter<Integer>(getActivity(), android.R.layout.simple_list_item_1, MainActivity.galgeLogik.getPossibleLengths()),
+                builder.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, MainActivity.galgeLogik.getPossibleLengths()),
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                System.out.println(MainActivity.galgeLogik.getPossibleLengths().get(which));
                                 Intent i = new Intent(getActivity(), GameActivity.class);
+                                i.putExtra("wordLength", MainActivity.galgeLogik.getPossibleLengths().get(which));
                                 startActivity(i);
                             }
                         });

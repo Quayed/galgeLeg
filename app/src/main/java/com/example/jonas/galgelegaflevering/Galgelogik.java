@@ -87,12 +87,12 @@ public class Galgelogik {
         if (!checkDataBase()) {
             return muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         } else {
-            SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
+            SQLiteDatabase db = dbHandler.getReadableDatabase();
             Cursor cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
             String word = null;
             if (cursor != null){
-                cursor.moveToFirst();
-                word = cursor.getString(1);
+                if(cursor.moveToFirst())
+                    word = cursor.getString(1);
                 cursor.close();
             }
             db.close();
@@ -191,7 +191,7 @@ public class Galgelogik {
             db = dbHandler.getWritableDatabase();
 
             for (String ord : muligeOrd) {
-                if(ord.length() < 3 || ord.length() > 12){
+                if(ord.length() < 3 || ord.length() > 11){
                     continue;
                 }
                 ContentValues values = new ContentValues();
@@ -202,6 +202,7 @@ public class Galgelogik {
                 System.out.println(ord);
                 counter[ord.length()]++;
             }
+            possibleLengths = new ArrayList<>();
             for(int i = 3; i < counter.length; i++){
                 if(counter[i] > 5){
                     possibleLengths.add(i);
@@ -213,9 +214,11 @@ public class Galgelogik {
 
     private boolean checkDataBase() {
         Cursor cursor = dbHandler.getReadableDatabase().rawQuery("SELECT * FROM words LIMIT 1", null);
-        boolean returnValue =  cursor != null;
-        if(returnValue)
+        boolean returnValue = false;
+        if (cursor != null){
+            returnValue = !(cursor.getCount() == 0);
             cursor.close();
+        }
         return returnValue;
     }
 
@@ -232,10 +235,16 @@ public class Galgelogik {
                 if (cursor == null)
                     return null;
 
-                while (cursor.moveToFirst()){
-                    counter[cursor.getInt(4)]++;
-                }
+                if(cursor.getCount() == 0)
+                    return null;
+
+                cursor.moveToFirst();
+                do{
+//                    System.out.println(cursor.getString(1));
+                    counter[cursor.getInt(3)]++;
+                }while(cursor.moveToNext());
                 cursor.close();
+                possibleLengths = new ArrayList<>();
                 for(int i = 3; i < counter.length; i++){
                     if(counter[i] > 5){
                         possibleLengths.add(i);
