@@ -21,7 +21,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
     final int gameOverRequestCode = 1;
 
     TextView visibleWord;
-    TextView usedLetters;
     ImageView galge;
     ArrayList<Button> keyboard = new ArrayList<>();
 
@@ -32,7 +31,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.game_activity);
 
         visibleWord = (TextView) findViewById(R.id.visibleWord);
-        usedLetters = (TextView) findViewById(R.id.usedLetters);
         galge = (ImageView) findViewById(R.id.imageView);
 
         keyboard.add((Button) findViewById(R.id.btn1));
@@ -81,8 +79,6 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
 
         visibleWord.setText(MainActivity.galgeLogik.getSynligtOrd());
-
-        usedLetters.setText("" + MainActivity.galgeLogik.getBrugteBogstaver());
 
         switch (MainActivity.galgeLogik.getAntalForkerteBogstaver()) {
             case 0:

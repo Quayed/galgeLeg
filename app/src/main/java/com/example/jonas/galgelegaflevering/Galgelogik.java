@@ -89,10 +89,8 @@ public class Galgelogik {
             if (cursor != null){
                 cursor.moveToFirst();
                 word = cursor.getString(1);
+                cursor.close();
             }
-
-
-            cursor.close();
             db.close();
             if(word != null)
                 return word;
@@ -186,11 +184,15 @@ public class Galgelogik {
             nulstil();
 
             SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
-            db.execSQL("CREATE TABLE words (id INTEGER PRIMARY KEY, word TEXT NOT NULL, timesUsed INTEGER);");
+            db.execSQL("CREATE TABLE words (id INTEGER PRIMARY KEY, word TEXT NOT NULL, timesUsed INTEGER, wordLength INTEGER);");
             for (String ord : muligeOrd) {
+                if(ord.length() < 3){
+                    continue;
+                }
                 ContentValues values = new ContentValues();
                 values.put("word", ord);
                 values.put("timesUsed", 0);
+                values.put("wordLength", ord.length());
                 db.insert("words", null, values);
             }
             db.close();
