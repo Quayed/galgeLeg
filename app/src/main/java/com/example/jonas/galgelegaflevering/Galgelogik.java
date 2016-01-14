@@ -85,13 +85,19 @@ public class Galgelogik {
         } else {
             SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
             Cursor cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
-            if (cursor != null)
+            String word = null;
+            if (cursor != null){
                 cursor.moveToFirst();
+                word = cursor.getString(1);
+            }
 
-            String word = cursor.getString(1);
+
             cursor.close();
             db.close();
-            return word;
+            if(word != null)
+                return word;
+            else
+                return muligeOrd.get((int)(Math.random()*muligeOrd.size()));
         }
     }
 
