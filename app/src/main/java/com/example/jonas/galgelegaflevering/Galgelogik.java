@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -26,6 +27,9 @@ public class Galgelogik {
     private boolean spilletErTabt;
     private String DB_FULL_PATH;
     private ArrayList<Integer> possibleLengths;
+    private Context context;
+    private WordsDB dbHandler;
+    private SQLiteDatabase db;
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
     }
@@ -67,7 +71,7 @@ public class Galgelogik {
     }
 
     public Galgelogik(Context context) {
-        DB_FULL_PATH = context.getFilesDir() + "/database.db";
+        dbHandler = new WordsDB(context);
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -169,7 +173,7 @@ public class Galgelogik {
         return sb.toString();
     }
 
-    public void hentOrdFraDr() throws Exception {
+    public void hentOrdFraDr() throws IOException {
         if (!checkDataBase()) {
             // the database does not exist
             String data = hentUrl("http://dr.dk");
@@ -183,10 +187,11 @@ public class Galgelogik {
             System.out.println("muligeOrd = " + muligeOrd);
             nulstil();
             int[] counter = new int[12];
-            SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
-            db.execSQL("CREATE TABLE words (id INTEGER PRIMARY KEY, word TEXT NOT NULL, timesUsed INTEGER, wordLength INTEGER);");
+
+            db = dbHandler.getWritableDatabase();
+
             for (String ord : muligeOrd) {
-                if(ord.length() < 3){
+                if(ord.length() < 3 || ord.length() > 12){
                     continue;
                 }
                 ContentValues values = new ContentValues();
@@ -194,6 +199,7 @@ public class Galgelogik {
                 values.put("timesUsed", 0);
                 values.put("wordLength", ord.length());
                 db.insert("words", null, values);
+                System.out.println(ord);
                 counter[ord.length()]++;
             }
             for(int i = 3; i < counter.length; i++){
@@ -206,22 +212,20 @@ public class Galgelogik {
     }
 
     private boolean checkDataBase() {
-        SQLiteDatabase checkDB = null;
-        try {
-            checkDB = SQLiteDatabase.openDatabase(DB_FULL_PATH, null,
-                    SQLiteDatabase.OPEN_READONLY);
-            checkDB.close();
-        } catch (SQLiteException e) {
-            // database doesn't exist yet.
-        }
-        return checkDB != null;
+        Cursor cursor = dbHandler.getReadableDatabase().rawQuery("SELECT * FROM words LIMIT 1", null);
+        boolean returnValue =  cursor != null;
+        if(returnValue)
+            cursor.close();
+        return returnValue;
     }
 
     public ArrayList<Integer> getPossibleLengths(){
         if(possibleLengths == null){
             if (checkDataBase()) {
-                SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(DB_FULL_PATH, null);
-                Cursor cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
+                System.out.println("Getting from DB");
+                db = dbHandler.getReadableDatabase();
+                Cursor cursor = db.rawQuery("SELECT * FROM words", null);
+
 
                 int[] counter = new int[12];
 
@@ -231,6 +235,7 @@ public class Galgelogik {
                 while (cursor.moveToFirst()){
                     counter[cursor.getInt(4)]++;
                 }
+                cursor.close();
                 for(int i = 3; i < counter.length; i++){
                     if(counter[i] > 5){
                         possibleLengths.add(i);

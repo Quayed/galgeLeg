@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class MainActivity extends Activity {
     static Galgelogik galgeLogik;
 
@@ -25,21 +27,22 @@ public class MainActivity extends Activity {
         if (galgeLogik == null) {
             galgeLogik = new Galgelogik(this);
 
-            new AsyncTask() {
-                protected Object doInBackground(Object... arg0) {
+            new AsyncTask<Activity, Void, Integer>() {
+                protected Integer doInBackground(Activity... arg0) {
                     try {
                         MainActivity.galgeLogik.hentOrdFraDr();
-                        return "Ordene blev korrekt hentet fra DR's server";
-                    } catch (Exception e) {
+                        return -1;
+                    } catch (IOException e) {
                         e.printStackTrace();
-                        return "Ordene blev ikke hentet korrekt: " + e;
+                        return 1;
                     }
                 }
 
                 @Override
-                protected void onPostExecute(Object resultat) {
-
-                    // info.setText("resultat: \n" + resultat);
+                protected void onPostExecute(Integer resultat) {
+                    if(resultat == 1){
+                        Toast.makeText(MainActivity.this, "Ordene kunne ikke hentes fra DR", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }.execute(this);
         }

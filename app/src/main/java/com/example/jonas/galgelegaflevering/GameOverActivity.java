@@ -25,7 +25,6 @@ public class GameOverActivity extends Activity implements View.OnClickListener {
         endGameButton = (Button) findViewById(R.id.endGameButton);
         gameOverImage = (ImageView) findViewById(R.id.gameOverImage);
 
-        Intent i = getIntent();
         boolean isGameWon = MainActivity.galgeLogik.erSpilletVundet();
         String word = MainActivity.galgeLogik.getOrdet();
 
