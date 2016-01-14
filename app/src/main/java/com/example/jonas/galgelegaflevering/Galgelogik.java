@@ -30,6 +30,7 @@ public class Galgelogik {
     private Context context;
     private WordsDB dbHandler;
     private SQLiteDatabase db;
+    private int wordLength;
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
     }
@@ -63,9 +64,24 @@ public class Galgelogik {
     }
 
     public String[] getMuligeOrd() {
-
-        String[] newStrings = new String[muligeOrd.size()];
+        String[] newStrings;
+        newStrings = new String[muligeOrd.size()];
         newStrings = muligeOrd.toArray(newStrings);
+        if(checkDataBase()){
+            muligeOrd = new ArrayList<>();
+            SQLiteDatabase db = dbHandler.getReadableDatabase();
+            Cursor cursor;
+            cursor = db.rawQuery("SELECT * FROM words", null);
+            if(cursor != null && cursor.getCount() != 0){
+                cursor.moveToFirst();
+                do{
+                    muligeOrd.add(cursor.getString(WordsDB.WORD));
+                    newStrings = new String[muligeOrd.size()];
+                    newStrings = muligeOrd.toArray(newStrings);
+                }while(cursor.moveToNext());
+            } else
+                return newStrings;
+        }
 
         return newStrings;
     }
@@ -83,16 +99,16 @@ public class Galgelogik {
         nulstil();
     }
 
-    public String hentNytOrd(int length) {
+    public String hentNytOrd() {
         if (!checkDataBase()) {
             return muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         } else {
             SQLiteDatabase db = dbHandler.getReadableDatabase();
-            Cursor cursor = null;
-            if(length == 0) {
+            Cursor cursor;
+            if(wordLength == 0) {
                 cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
             }else {
-                cursor = db.rawQuery("SELECT * FROM words WHERE wordLength =? ORDER BY RANDOM() LIMIT 1", new String[]{String.valueOf(length)});
+                cursor = db.rawQuery("SELECT * FROM words WHERE wordLength =? ORDER BY RANDOM() LIMIT 1", new String[]{String.valueOf(wordLength)});
             }
             String word = null;
             if (cursor != null){
@@ -115,7 +131,7 @@ public class Galgelogik {
         antalForkerteBogstaver = 0;
         spilletErVundet = false;
         spilletErTabt = false;
-        ordet = hentNytOrd(0);
+        ordet = hentNytOrd();
         opdaterSynligtOrd();
     }
 
@@ -196,7 +212,6 @@ public class Galgelogik {
             int[] counter = new int[12];
 
             db = dbHandler.getWritableDatabase();
-
             for (String ord : muligeOrd) {
                 if(ord.length() < 3 || ord.length() > 11){
                     continue;
@@ -261,5 +276,9 @@ public class Galgelogik {
             return null;
         } else
             return possibleLengths;
+    }
+
+    public void setWordLength(int wordLength) {
+        this.wordLength = wordLength;
     }
 }

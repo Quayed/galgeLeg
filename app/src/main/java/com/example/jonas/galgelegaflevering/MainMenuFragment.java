@@ -46,8 +46,8 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                MainActivity.galgeLogik.setWordLength(MainActivity.galgeLogik.getPossibleLengths().get(which));
                                 Intent i = new Intent(getActivity(), GameActivity.class);
-                                i.putExtra("wordLength", MainActivity.galgeLogik.getPossibleLengths().get(which));
                                 startActivity(i);
                             }
                         });
