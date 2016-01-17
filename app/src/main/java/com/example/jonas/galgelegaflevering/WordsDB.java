@@ -16,9 +16,10 @@ public class WordsDB extends SQLiteOpenHelper {
     public static final int TIMESUSED = 2;
     public static final int WORDLENGTH = 3;
 
-    public WordsDB(Context context){
+    public WordsDB(Context context) {
         super(context, DB_NAME, null, 1);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE words (id INTEGER PRIMARY KEY, word TEXT NOT NULL, timesUsed INTEGER, wordLength INTEGER);");

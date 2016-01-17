@@ -44,13 +44,13 @@ public class MainActivity extends Activity {
                         }
                     }
                 }.execute(this);
-            } else{
+            } else {
                 Toast.makeText(MainActivity.this, "Ordene kunne ikke hentes fra databasen", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private boolean isConnected(){
+    private boolean isConnected() {
         ConnectivityManager connManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = connManager.getActiveNetworkInfo();

@@ -31,6 +31,7 @@ public class Galgelogik {
     private WordsDB dbHandler;
     private SQLiteDatabase db;
     private int wordLength;
+
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
     }
@@ -67,18 +68,18 @@ public class Galgelogik {
         String[] newStrings;
         newStrings = new String[muligeOrd.size()];
         newStrings = muligeOrd.toArray(newStrings);
-        if(checkDataBase()){
+        if (checkDataBase()) {
             muligeOrd = new ArrayList<>();
             SQLiteDatabase db = dbHandler.getReadableDatabase();
             Cursor cursor;
             cursor = db.rawQuery("SELECT * FROM words", null);
-            if(cursor != null && cursor.getCount() != 0){
+            if (cursor != null && cursor.getCount() != 0) {
                 cursor.moveToFirst();
-                do{
+                do {
                     muligeOrd.add(cursor.getString(WordsDB.WORD));
                     newStrings = new String[muligeOrd.size()];
                     newStrings = muligeOrd.toArray(newStrings);
-                }while(cursor.moveToNext());
+                } while (cursor.moveToNext());
             } else
                 return newStrings;
         }
@@ -105,24 +106,24 @@ public class Galgelogik {
         } else {
             SQLiteDatabase db = dbHandler.getReadableDatabase();
             Cursor cursor;
-            if(wordLength == 0) {
+            if (wordLength == 0) {
                 cursor = db.rawQuery("SELECT * FROM words ORDER BY RANDOM() LIMIT 1", null);
-            }else {
+            } else {
                 cursor = db.rawQuery("SELECT * FROM words WHERE wordLength =? ORDER BY RANDOM() LIMIT 1", new String[]{String.valueOf(wordLength)});
             }
             String word = null;
-            if (cursor != null){
-                if(cursor.moveToFirst())
+            if (cursor != null) {
+                if (cursor.moveToFirst())
                     word = cursor.getString(1);
                 cursor.close();
             }
             db.close();
-            if(word != null) {
+            if (word != null) {
                 ordet = word;
                 opdaterSynligtOrd();
                 return word;
-            }else
-                return muligeOrd.get((int)(Math.random()*muligeOrd.size()));
+            } else
+                return muligeOrd.get((int) (Math.random() * muligeOrd.size()));
         }
     }
 
@@ -212,7 +213,7 @@ public class Galgelogik {
             db = dbHandler.getWritableDatabase();
 
             for (String ord : muligeOrd) {
-                if(ord.length() < 3 || ord.length() > 11){
+                if (ord.length() < 3 || ord.length() > 11) {
                     continue;
                 }
                 ContentValues values = new ContentValues();
@@ -223,8 +224,8 @@ public class Galgelogik {
                 counter[ord.length()]++;
             }
             possibleLengths = new ArrayList<>();
-            for(int i = 3; i < counter.length; i++){
-                if(counter[i] > 5){
+            for (int i = 3; i < counter.length; i++) {
+                if (counter[i] > 5) {
                     possibleLengths.add(i);
                 }
             }
@@ -235,15 +236,15 @@ public class Galgelogik {
     private boolean checkDataBase() {
         Cursor cursor = dbHandler.getReadableDatabase().rawQuery("SELECT * FROM words LIMIT 1", null);
         boolean returnValue = false;
-        if (cursor != null){
+        if (cursor != null) {
             returnValue = !(cursor.getCount() == 0);
             cursor.close();
         }
         return returnValue;
     }
 
-    public ArrayList<Integer> getPossibleLengths(){
-        if(possibleLengths == null){
+    public ArrayList<Integer> getPossibleLengths() {
+        if (possibleLengths == null) {
             if (checkDataBase()) {
                 db = dbHandler.getReadableDatabase();
                 Cursor cursor = db.rawQuery("SELECT * FROM words", null);
@@ -254,17 +255,17 @@ public class Galgelogik {
                 if (cursor == null)
                     return null;
 
-                if(cursor.getCount() == 0)
+                if (cursor.getCount() == 0)
                     return null;
 
                 cursor.moveToFirst();
-                do{
+                do {
                     counter[cursor.getInt(WordsDB.WORDLENGTH)]++;
-                }while(cursor.moveToNext());
+                } while (cursor.moveToNext());
                 cursor.close();
                 possibleLengths = new ArrayList<>();
-                for(int i = 3; i < counter.length; i++){
-                    if(counter[i] > 5){
+                for (int i = 3; i < counter.length; i++) {
+                    if (counter[i] > 5) {
                         possibleLengths.add(i);
                     }
                 }

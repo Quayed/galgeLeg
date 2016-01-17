@@ -41,7 +41,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Vælg den ønskede ord længde");
             // TODO HANDLE NULL POINTER
-            if(MainActivity.galgeLogik.getPossibleLengths() != null) {
+            if (MainActivity.galgeLogik.getPossibleLengths() != null) {
                 builder.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, MainActivity.galgeLogik.getPossibleLengths()),
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -52,7 +52,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                             }
                         });
                 builder.create().show();
-            } else{
+            } else {
                 Intent i = new Intent(getActivity(), GameActivity.class);
                 startActivity(i);
             }
