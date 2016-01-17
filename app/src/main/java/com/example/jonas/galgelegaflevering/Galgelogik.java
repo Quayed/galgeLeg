@@ -30,6 +30,7 @@ public class Galgelogik {
     private Context context;
     private WordsDB dbHandler;
     private SQLiteDatabase db;
+    private boolean wordsUpdated;
     private int wordLength;
 
     public ArrayList<String> getBrugteBogstaver() {
@@ -231,6 +232,7 @@ public class Galgelogik {
             }
             db.close();
         }
+        wordsUpdated = true;
     }
 
     private boolean checkDataBase() {
@@ -279,5 +281,13 @@ public class Galgelogik {
 
     public void setWordLength(int wordLength) {
         this.wordLength = wordLength;
+    }
+
+    public boolean isWordsUpdated() {
+        return wordsUpdated;
+    }
+
+    public void setWordsUpdated(boolean wordsUpdated) {
+        this.wordsUpdated = wordsUpdated;
     }
 }

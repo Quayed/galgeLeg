@@ -39,22 +39,35 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == gameButton) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Vælg den ønskede ord længde");
-            // TODO HANDLE NULL POINTER
-            if (MainActivity.galgeLogik.getPossibleLengths() != null) {
-                builder.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, MainActivity.galgeLogik.getPossibleLengths()),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                MainActivity.galgeLogik.setWordLength(MainActivity.galgeLogik.getPossibleLengths().get(which));
-                                Intent i = new Intent(getActivity(), GameActivity.class);
-                                startActivity(i);
-                            }
-                        });
+            if(MainActivity.galgeLogik.isWordsUpdated()) {
+                if (MainActivity.galgeLogik.getPossibleLengths() != null) {
+                    builder.setTitle("Vælg den ønskede ord længde");
+                    builder.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, MainActivity.galgeLogik.getPossibleLengths()),
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.galgeLogik.setWordLength(MainActivity.galgeLogik.getPossibleLengths().get(which));
+                                    Intent i = new Intent(getActivity(), GameActivity.class);
+                                    startActivity(i);
+                                }
+                            });
+                    builder.create().show();
+                } else {
+                    Intent i = new Intent(getActivity(), GameActivity.class);
+                    startActivity(i);
+                }
+            } else{
+                builder.setTitle("Ord ikke opdateret");
+                builder.setMessage("Ordene er ikke blevet opdateret - er du sikker på at du vil spille med de lokale ord?");
+                builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(getActivity(), GameActivity.class);
+                        startActivity(i);
+                    }
+                });
+                builder.setNegativeButton("Nej", null);
                 builder.create().show();
-            } else {
-                Intent i = new Intent(getActivity(), GameActivity.class);
-                startActivity(i);
             }
 
 

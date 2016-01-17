@@ -13,9 +13,19 @@
         android:background="@color/colorPrimary"
         app:title="@string/toolbar_name"/>
 
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="end"
+        android:indeterminate="false" />
+
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></FrameLayout>
+        android:layout_gravity="center_horizontal">
+
+    </FrameLayout>
 </LinearLayout>
