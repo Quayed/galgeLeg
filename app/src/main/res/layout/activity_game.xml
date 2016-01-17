@@ -69,77 +69,77 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Q"
+                    android:text="@string/q"
                     android:layout_weight="1"
                     android:id="@+id/btn1"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="W"
+                    android:text="@string/w"
                     android:layout_weight="1"
                     android:id="@+id/btn2"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="E"
+                    android:text="@string/e"
                     android:layout_weight="1"
                     android:id="@+id/btn3"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="R"
+                    android:text="@string/r"
                     android:layout_weight="1"
                     android:id="@+id/btn4"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="T"
+                    android:text="@string/t"
                     android:layout_weight="1"
                     android:id="@+id/btn5"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Y"
+                    android:text="@string/y"
                     android:layout_weight="1"
                     android:id="@+id/btn6"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="U"
+                    android:text="@string/u"
                     android:layout_weight="1"
                     android:id="@+id/btn7"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="I"
+                    android:text="@string/i"
                     android:layout_weight="1"
                     android:id="@+id/btn8"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="O"
+                    android:text="@string/o"
                     android:layout_weight="1"
                     android:id="@+id/btn9"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="P"
+                    android:text="@string/p"
                     android:layout_weight="1"
                     android:id="@+id/btn10"
                     />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Å"
+                    android:text="@string/å"
                     android:layout_weight="1"
                     android:id="@+id/btn11"
                     />
@@ -153,77 +153,77 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="A"
+                android:text="@string/a"
                 android:layout_weight="1"
                 android:id="@+id/btn12"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="S"
+                android:text="@string/s"
                 android:layout_weight="1"
                 android:id="@+id/btn13"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="D"
+                android:text="@string/d"
                 android:layout_weight="1"
                 android:id="@+id/btn14"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="F"
+                android:text="@string/f"
                 android:layout_weight="1"
                 android:id="@+id/btn15"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="G"
+                android:text="@string/g"
                 android:layout_weight="1"
                 android:id="@+id/btn16"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="H"
+                android:text="@string/h"
                 android:layout_weight="1"
                 android:id="@+id/btn17"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="J"
+                android:text="@string/j"
                 android:layout_weight="1"
                 android:id="@+id/btn18"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="K"
+                android:text="@string/k"
                 android:layout_weight="1"
                 android:id="@+id/btn19"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="L"
+                android:text="@string/l"
                 android:layout_weight="1"
                 android:id="@+id/btn20"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Æ"
+                android:text="@string/æ"
                 android:layout_weight="1"
                 android:id="@+id/btn21"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ø"
+                android:text="@string/ø"
                 android:layout_weight="1"
                 android:id="@+id/btn22"
                 />
@@ -237,49 +237,49 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Z"
+                android:text="@string/z"
                 android:layout_weight="1"
                 android:id="@+id/btn23"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="X"
+                android:text="@string/x"
                 android:layout_weight="1"
                 android:id="@+id/btn24"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="C"
+                android:text="@string/c"
                 android:layout_weight="1"
                 android:id="@+id/btn25"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="V"
+                android:text="@string/v"
                 android:layout_weight="1"
                 android:id="@+id/btn26"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="B"
+                android:text="@string/b"
                 android:layout_weight="1"
                 android:id="@+id/btn27"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="N"
+                android:text="@string/n"
                 android:layout_weight="1"
                 android:id="@+id/btn28"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="M"
+                android:text="@string/m"
                 android:layout_weight="1"
                 android:id="@+id/btn29"
                 />
