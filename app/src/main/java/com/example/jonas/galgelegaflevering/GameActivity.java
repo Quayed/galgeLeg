@@ -1,23 +1,40 @@
 package com.example.jonas.galgelegaflevering;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.LightingColorFilter;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class GameActivity extends Activity implements View.OnClickListener {
+public class GameActivity extends Activity implements View.OnClickListener, SensorEventListener{
     final int gameOverRequestCode = 1;
 
     TextView visibleWord;
     ImageView galge;
     Button newWordBtn;
     ArrayList<Button> keyboard = new ArrayList<>();
+
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+
+    private static final double SHAKE_THRESHOLD_GRAVITY = 2.7;
+    private static final int SHAKE_SLOP_TIME_MS = 50;
+
+    private long shakeTimestamp;
+    private boolean popUpActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +83,11 @@ public class GameActivity extends Activity implements View.OnClickListener {
         for (Button btn : keyboard) {
             btn.setOnClickListener(this);
         }
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+
 
         MainActivity.galgeLogik.nulstil();
         updateViews();
@@ -154,5 +176,72 @@ public class GameActivity extends Activity implements View.OnClickListener {
             }
             updateViews();
         }
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        double x = event.values[0];
+        double y = event.values[1];
+        double z = event.values[2];
+
+        double gX = x / SensorManager.GRAVITY_EARTH;
+        double gY = y / SensorManager.GRAVITY_EARTH;
+        double gZ = z / SensorManager.GRAVITY_EARTH;
+
+        double gForce = java.lang.Math.sqrt(gX * gX + gY * gY + gZ * gZ);
+
+        if (gForce > SHAKE_THRESHOLD_GRAVITY){
+            final long now = System.currentTimeMillis();
+
+            if(shakeTimestamp + SHAKE_SLOP_TIME_MS > now){
+                return;
+            }
+
+            shakeTimestamp = now;
+
+            onShake();
+        }
+    }
+
+    private void onShake(){
+        if (!popUpActive) {
+            popUpActive = true;
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Skift ord?");
+            builder.setMessage("Er du sikker på at du vil gerne vil skifte ord?");
+            builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MainActivity.galgeLogik.nulstil();
+                    updateViews();
+                    clearKeyboard();
+                    popUpActive = false;
+                }
+            });
+            builder.setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    popUpActive = false;
+                }
+            });
+            builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                @Override
+                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                    if(keyCode == KeyEvent.KEYCODE_BACK){
+                        popUpActive = false;
+                        dialog.dismiss();
+                    }
+                    return true;
+                }
+            });
+            builder.create().show();
+        }
+    }
+
+
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
