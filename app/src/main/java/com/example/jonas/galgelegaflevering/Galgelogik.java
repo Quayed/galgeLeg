@@ -201,7 +201,6 @@ public class Galgelogik {
     public void hentNyeOrd() throws IOException {
         if (!checkDataBase()) {
             // the database does not exist
-            System.out.println("BlaBla");
             String data = hentUrl("http://msondrup.dk/ord.txt");
 
             data = data.replaceAll("<.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");

@@ -16,6 +16,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
     TextView visibleWord;
     ImageView galge;
+    Button newWordBtn;
     ArrayList<Button> keyboard = new ArrayList<>();
 
     @Override
@@ -25,7 +26,8 @@ public class GameActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_game);
 
         visibleWord = (TextView) findViewById(R.id.visibleWord);
-        galge = (ImageView) findViewById(R.id.imageView);
+        galge = (ImageView) findViewById(R.id.galgeView);
+        newWordBtn = (Button) findViewById(R.id.newWordBtn);
 
         keyboard.add((Button) findViewById(R.id.btn1));
         keyboard.add((Button) findViewById(R.id.btn1));
@@ -60,6 +62,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
 
         Intent i = getIntent();
 
+        newWordBtn.setOnClickListener(this);
         for (Button btn : keyboard) {
             btn.setOnClickListener(this);
         }
@@ -117,10 +120,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
                 } else {
                     MainActivity.galgeLogik.nulstil();
                     updateViews();
-                    for (Button btn : keyboard) {
-                        btn.getBackground().clearColorFilter();
-                        btn.setClickable(true);
-                    }
+                    clearKeyboard();
                 }
             } else {
                 finish(); //back button was pressed on game over screen
@@ -128,9 +128,20 @@ public class GameActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    private void clearKeyboard(){
+        for (Button btn : keyboard) {
+            btn.getBackground().clearColorFilter();
+            btn.setClickable(true);
+        }
+    }
+
     @Override
     public void onClick(View v) {
-        if (keyboard.contains(v)) {
+        if (v == newWordBtn){
+            MainActivity.galgeLogik.nulstil();
+            updateViews();
+            clearKeyboard();
+        } else if (keyboard.contains(v)) {
             Button btn = (Button) v;
             System.out.println(btn.getText());
             MainActivity.galgeLogik.gætBogstav(btn.getText().toString().toLowerCase());
