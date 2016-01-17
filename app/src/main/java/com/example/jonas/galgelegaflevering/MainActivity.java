@@ -8,13 +8,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.io.IOException;
 
 public class MainActivity extends Activity {
     static Galgelogik galgeLogik;
-    private ProgressBar progressBar;
+    private RelativeLayout loadingStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +23,8 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
         
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        
+        loadingStatus = (RelativeLayout) findViewById(R.id.loading);
+
         getFragmentManager().beginTransaction()
                 .add(R.id.fragmentContainer, new MainMenuFragment())
                 .commit();
@@ -31,6 +32,7 @@ public class MainActivity extends Activity {
         if (galgeLogik == null) {
             galgeLogik = new Galgelogik(this);
             if (isConnected()) {
+                loadingStatus.setVisibility(View.VISIBLE);
                 new AsyncTask<Activity, Void, Integer>() {
                     protected Integer doInBackground(Activity... arg0) {
                         try {
@@ -46,7 +48,9 @@ public class MainActivity extends Activity {
                     @Override
                     protected void onPostExecute(Integer resultat) {
                         if (resultat == -1){
-                            progressBar.setVisibility(View.GONE);
+                            if(loadingStatus != null){
+                                loadingStatus.setVisibility(View.GONE);
+                            }
                             Toast.makeText(MainActivity.this, "Ordene er blevet opdateret fra databasen", Toast.LENGTH_SHORT).show();
                         } else if (resultat == 1) {
                             Toast.makeText(MainActivity.this, "Ordene kunne ikke hentes fra databasen.", Toast.LENGTH_SHORT).show();

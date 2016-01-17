@@ -102,7 +102,7 @@ public class Galgelogik {
     }
 
     public String hentNytOrd() {
-        if (!checkDataBase()) {
+        if (!checkDataBase() || !wordsUpdated) {
             return muligeOrd.get(new Random().nextInt(muligeOrd.size()));
         } else {
             SQLiteDatabase db = dbHandler.getReadableDatabase();
@@ -187,7 +187,7 @@ public class Galgelogik {
     }
 
 
-    public static String hentUrl(String url) throws IOException {
+    private static String hentUrl(String url) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(new URL(url).openStream()));
         StringBuilder sb = new StringBuilder();
         String linje = br.readLine();
