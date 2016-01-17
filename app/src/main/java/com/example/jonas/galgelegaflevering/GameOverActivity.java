@@ -18,7 +18,7 @@ public class GameOverActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameover_activity);
+        setContentView(R.layout.activity_gameover);
 
         gameOverText = (TextView) findViewById(R.id.gameOverText);
         newGameButton = (Button) findViewById(R.id.newGameButton);

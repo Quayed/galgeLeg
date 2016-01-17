@@ -2,18 +2,12 @@ package com.example.jonas.galgelegaflevering;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.LightingColorFilter;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -28,7 +22,7 @@ public class GameActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.game_activity);
+        setContentView(R.layout.activity_game);
 
         visibleWord = (TextView) findViewById(R.id.visibleWord);
         galge = (ImageView) findViewById(R.id.imageView);
