@@ -196,22 +196,21 @@ public class Galgelogik {
         return sb.toString();
     }
 
-    public void hentOrdFraDr() throws IOException {
+    public void hentNyeOrd() throws IOException {
         if (!checkDataBase()) {
             // the database does not exist
-            String data = hentUrl("http://dr.dk");
-            System.out.println("data = " + data);
+            System.out.println("BlaBla");
+            String data = hentUrl("http://msondrup.dk/ord.txt");
 
             data = data.replaceAll("<.+?>", " ").toLowerCase().replaceAll("[^a-zæøå]", " ");
-            System.out.println("data = " + data);
             muligeOrd.clear();
             muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
 
-            System.out.println("muligeOrd = " + muligeOrd);
             nulstil();
             int[] counter = new int[12];
 
             db = dbHandler.getWritableDatabase();
+
             for (String ord : muligeOrd) {
                 if(ord.length() < 3 || ord.length() > 11){
                     continue;
@@ -221,7 +220,6 @@ public class Galgelogik {
                 values.put("timesUsed", 0);
                 values.put("wordLength", ord.length());
                 db.insert("words", null, values);
-                System.out.println(ord);
                 counter[ord.length()]++;
             }
             possibleLengths = new ArrayList<>();
