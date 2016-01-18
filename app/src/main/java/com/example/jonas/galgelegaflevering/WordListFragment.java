@@ -17,7 +17,7 @@ public class WordListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.wordlist_fragment, container, false);
 
-        String[] words = MainActivity.galgeLogik.getMuligeOrd();
+        String[] words = Galgelogik.getInstance().getMuligeOrd();
         ListView list = (ListView) result.findViewById(R.id.listOfWords);
         list.setAdapter(new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, android.R.id.text1, words));
 

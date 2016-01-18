@@ -95,20 +95,20 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         myCountDown = new CountDownTimer(100000, 1000){
             public void onTick(long millisUntilFinished){
                 timeLeft.setText("Tid tilbage: " + millisUntilFinished/1000 + "s");
-                MainActivity.galgeLogik.setTimeLeft((int)millisUntilFinished/1000);
+                Galgelogik.getInstance().setTimeLeft((int) millisUntilFinished / 1000);
             }
 
             public void onFinish(){
-                MainActivity.galgeLogik.setTimeLeft(0);
+                Galgelogik.getInstance().setTimeLeft(0);
                 gameOver();
             }
         };
 
         myCountDown.start();
 
-        MainActivity.galgeLogik.nulstil();
+        Galgelogik.getInstance().nulstil();
         updateViews();
-        MainActivity.galgeLogik.logStatus();
+        Galgelogik.getInstance().logStatus();
     }
 
     private void gameOver(){
@@ -117,14 +117,14 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
     }
 
     private void updateViews() {
-        if (MainActivity.galgeLogik.erSpilletSlut()) {
+        if (Galgelogik.getInstance().erSpilletSlut()) {
             myCountDown.cancel();
             gameOver();
         }
 
-        visibleWord.setText(MainActivity.galgeLogik.getSynligtOrd());
+        visibleWord.setText(Galgelogik.getInstance().getSynligtOrd());
 
-        switch (MainActivity.galgeLogik.getAntalForkerteBogstaver()) {
+        switch (Galgelogik.getInstance().getAntalForkerteBogstaver()) {
             case 0:
                 galge.setImageResource(R.drawable.galge);
                 break;
@@ -162,7 +162,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
                 if (!playAgain) {
                     finish(); //player does not want to play again
                 } else {
-                    MainActivity.galgeLogik.nulstil();
+                    Galgelogik.getInstance().nulstil();
                     updateViews();
                     clearKeyboard();
                 }
@@ -182,14 +182,14 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
     @Override
     public void onClick(View v) {
         if (v == newWordBtn){
-            MainActivity.galgeLogik.nulstil();
+            Galgelogik.getInstance().nulstil();
             updateViews();
             clearKeyboard();
         } else if (keyboard.contains(v)) {
             Button btn = (Button) v;
             System.out.println(btn.getText());
-            MainActivity.galgeLogik.gætBogstav(btn.getText().toString().toLowerCase());
-            if (MainActivity.galgeLogik.erSidsteBogstavKorrekt()) {
+            Galgelogik.getInstance().gætBogstav(btn.getText().toString().toLowerCase());
+            if (Galgelogik.getInstance().erSidsteBogstavKorrekt()) {
                 btn.getBackground().setColorFilter(new LightingColorFilter(0, 0x4CAF50));
                 btn.setClickable(false);
             } else {
@@ -234,7 +234,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
             builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    MainActivity.galgeLogik.nulstil();
+                    Galgelogik.getInstance().nulstil();
                     updateViews();
                     clearKeyboard();
                     popUpActive = false;

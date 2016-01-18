@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import com.parse.ParseObject;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 public class Galgelogik {
@@ -33,6 +36,8 @@ public class Galgelogik {
     private boolean wordsUpdated;
     private int wordLength;
     private int timeLeft;
+    private static Galgelogik instance;
+    private List<ParseObject> highscore;
 
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
@@ -89,8 +94,16 @@ public class Galgelogik {
         return newStrings;
     }
 
-    public Galgelogik(Context context) {
-        dbHandler = new WordsDB(context);
+    public static Galgelogik getInstance() {
+        if(instance != null)
+            return instance;
+        else{
+            instance = new Galgelogik();
+            return instance;
+        }
+    }
+
+    private Galgelogik() {
         muligeOrd.add("bil");
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
@@ -99,7 +112,10 @@ public class Galgelogik {
         muligeOrd.add("gangsti");
         muligeOrd.add("skovsnegl");
         muligeOrd.add("solsort");
-        nulstil();
+    }
+
+    public void initDB(Context context){
+        dbHandler = new WordsDB(context);
     }
 
     public String hentNytOrd() {

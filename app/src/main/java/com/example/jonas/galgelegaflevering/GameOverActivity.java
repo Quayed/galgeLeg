@@ -25,8 +25,8 @@ public class GameOverActivity extends Activity implements View.OnClickListener {
         endGameButton = (Button) findViewById(R.id.endGameButton);
         gameOverImage = (ImageView) findViewById(R.id.gameOverImage);
 
-        boolean isGameWon = MainActivity.galgeLogik.erSpilletVundet();
-        String word = MainActivity.galgeLogik.getOrdet();
+        boolean isGameWon = Galgelogik.getInstance().erSpilletVundet();
+        String word = Galgelogik.getInstance().getOrdet();
 
         if (isGameWon) {
             gameOverText.setText("Tillyke du vandt! Din score var: " + getScore());
@@ -54,7 +54,6 @@ public class GameOverActivity extends Activity implements View.OnClickListener {
     }
 
     private int getScore(){
-        int score = MainActivity.galgeLogik.getTimeLeft() * MainActivity.galgeLogik.getWordLength() - (MainActivity.galgeLogik.getAntalForkerteBogstaver()*35);
-        return score;
+        return 1000 + Galgelogik.getInstance().getTimeLeft() * Galgelogik.getInstance().getWordLength() - (Galgelogik.getInstance().getAntalForkerteBogstaver()*35);
     }
 }
