@@ -34,7 +34,7 @@ public class AddToHighscoreFragment extends Fragment implements View.OnClickList
 
         int highscoreNumber = Galgelogik.getInstance().getNumberOnHighscore();
         if (highscoreNumber != 0){
-            message.setText("Tillykke du er nummer " + highscoreNumber + " på highscoren");
+            message.setText("Tillykke din score var " + Galgelogik.getInstance().getScore() + " - du er nummer " + highscoreNumber + " på highscoren");
         } else{
             ((GameOverActivity)getActivity()).goToGameOver();
         }

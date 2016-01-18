@@ -31,7 +31,7 @@ public class GameOverActivity extends Activity implements HighscoreSubscriber {
 
     public void goToGameOver(){
         getFragmentManager().beginTransaction()
-                .add(R.id.fragmentContainer, new GameOverFragment())
+                .replace(R.id.fragmentContainer, new GameOverFragment())
                 .commit();
     }
 
