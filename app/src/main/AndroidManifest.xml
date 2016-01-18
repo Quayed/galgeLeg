@@ -7,8 +7,13 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="uUF5dvrAPz9xlmiILkF9hwXdnOIrgtWAQVKnSHmX" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="NpNwcs6edjz1k1KQchhr2y7YBRCsUhCfdlpesHdR" />
         <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,12 +25,7 @@
         </activity>
         <activity android:name=".GameOverActivity" android:screenOrientation="portrait">
         </activity>
-        <meta-data
-            android:name="com.parse.APPLICATION_ID"
-            android:value="uUF5dvrAPz9xlmiILkF9hwXdnOIrgtWAQVKnSHmX" />
-        <meta-data
-            android:name="com.parse.CLIENT_KEY"
-            android:value="NpNwcs6edjz1k1KQchhr2y7YBRCsUhCfdlpesHdR" />
+
     </application>
 
 </manifest>

@@ -18,21 +18,24 @@ import android.widget.Toast;
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
     Button gameButton;
     Button rulesButton;
+    Button highscoreButton;
     Button wordButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View result = inflater.inflate(R.layout.menu_layout, container, false);
+        View layout = inflater.inflate(R.layout.menu_layout, container, false);
 
-        gameButton = (Button) result.findViewById(R.id.gameButton);
-        rulesButton = (Button) result.findViewById(R.id.rulesButton);
-        wordButton = (Button) result.findViewById(R.id.wordButton);
+        gameButton = (Button) layout.findViewById(R.id.gameButton);
+        rulesButton = (Button) layout.findViewById(R.id.rulesButton);
+        highscoreButton = (Button) layout.findViewById(R.id.highscore);
+        wordButton = (Button) layout.findViewById(R.id.wordButton);
 
         gameButton.setOnClickListener(this);
         rulesButton.setOnClickListener(this);
+        highscoreButton.setOnClickListener(this);
         wordButton.setOnClickListener(this);
 
-        return result;
+        return layout;
     }
 
     @Override
@@ -74,6 +77,11 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         } else if (v == rulesButton) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.fragmentContainer, new RulesFragment())
+                    .addToBackStack(null)
+                    .commit();
+        } else if(v == highscoreButton){
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, new HighscoreFragment())
                     .addToBackStack(null)
                     .commit();
         } else if (v == wordButton) {

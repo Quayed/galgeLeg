@@ -6,19 +6,25 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Spil"
+        android:text="@string/spil"
         android:id="@+id/gameButton"
         android:layout_gravity="center_horizontal" />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Regler"
+        android:text="@string/rules"
         android:id="@+id/rulesButton"
         android:layout_gravity="center_horizontal" />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Word"
+        android:text="@string/highscore"
+        android:id="@+id/highscore"
+        android:layout_gravity="center_horizontal" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/word_list"
         android:id="@+id/wordButton"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

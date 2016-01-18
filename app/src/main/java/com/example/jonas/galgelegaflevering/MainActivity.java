@@ -11,7 +11,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends Activity {
     static Galgelogik galgeLogik;
@@ -20,6 +26,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         setContentView(R.layout.activity_main);
         
@@ -61,6 +69,8 @@ public class MainActivity extends Activity {
                 Toast.makeText(MainActivity.this, "Ordene kunne ikke hentes fra databasen", Toast.LENGTH_SHORT).show();
             }
         }
+
+        Parse.initialize(getApplicationContext());
     }
 
     private boolean isConnected() {

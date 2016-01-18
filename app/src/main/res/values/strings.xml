@@ -34,4 +34,9 @@
     <string name="b">B</string>
     <string name="n">N</string>
     <string name="m">M</string>
+
+    <string name="spil">Spil</string>
+    <string name="rules">Regler</string>
+    <string name="word_list">Ord liste</string>
+    <string name="highscore">Highscore</string>
 </resources>
