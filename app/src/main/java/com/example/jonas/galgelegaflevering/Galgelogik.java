@@ -4,12 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 
+import com.parse.FindCallback;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -38,6 +38,7 @@ public class Galgelogik {
     private int timeLeft;
     private static Galgelogik instance;
     private List<ParseObject> highscore;
+    private List<HighscoreSubscriber> highscoreSubscribers;
 
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
@@ -94,6 +95,7 @@ public class Galgelogik {
         return newStrings;
     }
 
+
     public static Galgelogik getInstance() {
         if(instance != null)
             return instance;
@@ -112,6 +114,7 @@ public class Galgelogik {
         muligeOrd.add("gangsti");
         muligeOrd.add("skovsnegl");
         muligeOrd.add("solsort");
+        highscoreSubscribers = new ArrayList<>();
     }
 
     public void initDB(Context context){
@@ -315,5 +318,35 @@ public class Galgelogik {
 
     public void setTimeLeft(int timeLeft) {
         this.timeLeft = timeLeft;
+    }
+
+    public List<ParseObject> getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(List<ParseObject> highscore) {
+        this.highscore = highscore;
+    }
+
+    public void updateHighscore(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("highscore");
+        query.addDescendingOrder("score");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, com.parse.ParseException e) {
+                if (e == null) {
+                    highscore = objects;
+                    for(HighscoreSubscriber sub : highscoreSubscribers){
+                        sub.onHighscoreUpdate(highscore);
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void subscribeToHighscore(HighscoreSubscriber sub){
+        highscoreSubscribers.add(sub);
     }
 }

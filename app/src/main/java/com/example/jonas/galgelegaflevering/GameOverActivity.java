@@ -8,7 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GameOverActivity extends Activity implements View.OnClickListener {
+import com.parse.ParseObject;
+
+import java.util.List;
+
+public class GameOverActivity extends Activity implements View.OnClickListener, HighscoreSubscriber {
 
     TextView gameOverText;
     Button newGameButton;
@@ -55,5 +59,10 @@ public class GameOverActivity extends Activity implements View.OnClickListener {
 
     private int getScore(){
         return 1000 + Galgelogik.getInstance().getTimeLeft() * Galgelogik.getInstance().getWordLength() - (Galgelogik.getInstance().getAntalForkerteBogstaver()*35);
+    }
+
+    @Override
+    public void onHighscoreUpdate(List<ParseObject> highscore) {
+
     }
 }
