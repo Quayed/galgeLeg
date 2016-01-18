@@ -45,4 +45,8 @@
     <string name="indtast_navn">Indtast navn:</string>
     <string name="save">Gem highscore</string>
     <string name="dont_save">Gem ikke</string>
+    <string name="newGame">Start Nyt Spil!</string>
+    <string name="toMenu">Tilbage til menu</string>
+    <string name="gameOver">Game Over</string>
+    <string name="changeWordLength">Skift ordlængde</string>
 </resources>

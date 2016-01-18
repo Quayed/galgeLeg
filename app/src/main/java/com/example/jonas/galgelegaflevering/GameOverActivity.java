@@ -23,16 +23,24 @@ public class GameOverActivity extends Activity implements View.OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameover);
+        if(Galgelogik.getInstance().erSpilletVundet() && Galgelogik.getInstance().getScore() > Galgelogik.getInstance().getMinHighscore()){
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragmentContainer, new AddToHighscoreFragment())
+                    .commit();
+        }
 
-        gameOverText = (TextView) findViewById(R.id.gameOverText);
+        /*gameOverText = (TextView) findViewById(R.id.gameOverText);
         newGameButton = (Button) findViewById(R.id.newGameButton);
         endGameButton = (Button) findViewById(R.id.endGameButton);
         gameOverImage = (ImageView) findViewById(R.id.gameOverImage);
+*/
 
-        boolean isGameWon = Galgelogik.getInstance().erSpilletVundet();
+
+        /*boolean isGameWon = Galgelogik.getInstance().erSpilletVundet();
         String word = Galgelogik.getInstance().getOrdet();
 
         if (isGameWon) {
+
             gameOverText.setText("Tillyke du vandt! Din score var: " + getScore());
             gameOverText.setVisibility(View.VISIBLE);
         } else {
@@ -43,7 +51,7 @@ public class GameOverActivity extends Activity implements View.OnClickListener, 
         }
 
         newGameButton.setOnClickListener(this);
-        endGameButton.setOnClickListener(this);
+        endGameButton.setOnClickListener(this);*/
     }
 
     @Override
@@ -64,9 +72,6 @@ public class GameOverActivity extends Activity implements View.OnClickListener, 
         finish();
     }
 
-    private int getScore(){
-        return 1000 + Galgelogik.getInstance().getTimeLeft() * Galgelogik.getInstance().getWordLength() - (Galgelogik.getInstance().getAntalForkerteBogstaver()*35);
-    }
 
     @Override
     public void onHighscoreUpdate(List<ParseObject> highscore) {

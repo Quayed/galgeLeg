@@ -39,6 +39,7 @@ public class Galgelogik {
     private static Galgelogik instance;
     private List<ParseObject> highscore;
     private List<HighscoreSubscriber> highscoreSubscribers;
+    private int minHighscore;
 
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
@@ -331,11 +332,13 @@ public class Galgelogik {
     public void updateHighscore(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("highscore");
         query.addDescendingOrder("score");
+        query.setLimit(20);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, com.parse.ParseException e) {
                 if (e == null) {
                     highscore = objects;
+                    minHighscore = objects.get(objects.size()-1).getInt("score");
                     for(HighscoreSubscriber sub : highscoreSubscribers){
                         sub.onHighscoreUpdate(highscore);
                     }
@@ -348,5 +351,25 @@ public class Galgelogik {
 
     public void subscribeToHighscore(HighscoreSubscriber sub){
         highscoreSubscribers.add(sub);
+    }
+
+    public int getMinHighscore() {
+        return minHighscore;
+    }
+
+    public void setMinHighscore(int minHighscore) {
+        this.minHighscore = minHighscore;
+    }
+
+    public void uploadToHighscore(String name, int score, int wordLength){
+        ParseObject object = new ParseObject("highscore");
+        object.put("name", name);
+        object.put("score", score);
+        object.put("wordLength", wordLength);
+        object.saveInBackground();
+    }
+
+    public int getScore(){
+        return 1000 + timeLeft * wordLength - (antalForkerteBogstaver*35);
     }
 }
