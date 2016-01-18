@@ -10,6 +10,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,6 +26,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
     TextView visibleWord;
     ImageView galge;
     Button newWordBtn;
+    TextView timeLeft;
     ArrayList<Button> keyboard = new ArrayList<>();
 
     private SensorManager sensorManager;
@@ -35,6 +37,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
 
     private long shakeTimestamp;
     private boolean popUpActive;
+    private CountDownTimer myCountDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         visibleWord = (TextView) findViewById(R.id.visibleWord);
         galge = (ImageView) findViewById(R.id.galgeView);
         newWordBtn = (Button) findViewById(R.id.newWordBtn);
+        timeLeft = (TextView) findViewById(R.id.timeLeft);
 
         keyboard.add((Button) findViewById(R.id.btn1));
         keyboard.add((Button) findViewById(R.id.btn1));
@@ -88,16 +92,34 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
 
+        myCountDown = new CountDownTimer(100000, 1000){
+            public void onTick(long millisUntilFinished){
+                timeLeft.setText("Tid tilbage: " + millisUntilFinished/1000 + "s");
+                MainActivity.galgeLogik.setTimeLeft((int)millisUntilFinished/1000);
+            }
+
+            public void onFinish(){
+                MainActivity.galgeLogik.setTimeLeft(0);
+                gameOver();
+            }
+        };
+
+        myCountDown.start();
 
         MainActivity.galgeLogik.nulstil();
         updateViews();
         MainActivity.galgeLogik.logStatus();
     }
 
+    private void gameOver(){
+        Intent i = new Intent(this, GameOverActivity.class);
+        startActivityForResult(i, gameOverRequestCode);
+    }
+
     private void updateViews() {
         if (MainActivity.galgeLogik.erSpilletSlut()) {
-            Intent i = new Intent(this, GameOverActivity.class);
-            startActivityForResult(i, gameOverRequestCode);
+            myCountDown.cancel();
+            gameOver();
         }
 
         visibleWord.setText(MainActivity.galgeLogik.getSynligtOrd());

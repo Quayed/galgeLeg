@@ -29,7 +29,7 @@ public class GameOverActivity extends Activity implements View.OnClickListener {
         String word = MainActivity.galgeLogik.getOrdet();
 
         if (isGameWon) {
-            gameOverText.setText("Tillyke du vandt! Ordet var " + word);
+            gameOverText.setText("Tillyke du vandt! Din score var: " + getScore());
         } else {
             gameOverText.setText("Øv du tabte. Ordet var " + word);
             gameOverImage.setImageResource(R.drawable.forkert6);
@@ -51,5 +51,10 @@ public class GameOverActivity extends Activity implements View.OnClickListener {
 
         setResult(Activity.RESULT_OK, i);
         finish();
+    }
+
+    private int getScore(){
+        int score = MainActivity.galgeLogik.getTimeLeft() * MainActivity.galgeLogik.getWordLength() - (MainActivity.galgeLogik.getAntalForkerteBogstaver()*35);
+        return score;
     }
 }

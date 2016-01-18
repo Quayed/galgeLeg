@@ -32,6 +32,7 @@ public class Galgelogik {
     private SQLiteDatabase db;
     private boolean wordsUpdated;
     private int wordLength;
+    private int timeLeft;
 
     public ArrayList<String> getBrugteBogstaver() {
         return brugteBogstaver;
@@ -278,6 +279,8 @@ public class Galgelogik {
             return possibleLengths;
     }
 
+    public int getWordLength(){return this.wordLength;}
+
     public void setWordLength(int wordLength) {
         this.wordLength = wordLength;
     }
@@ -288,5 +291,13 @@ public class Galgelogik {
 
     public void setWordsUpdated(boolean wordsUpdated) {
         this.wordsUpdated = wordsUpdated;
+    }
+
+    public int getTimeLeft() {
+        return timeLeft;
+    }
+
+    public void setTimeLeft(int timeLeft) {
+        this.timeLeft = timeLeft;
     }
 }

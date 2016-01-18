@@ -53,7 +53,8 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/relativeLayout">
 
 
     <LinearLayout
@@ -287,6 +288,14 @@
 
     </LinearLayout>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/timeLeft"
+        android:layout_above="@+id/relativeLayout"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
