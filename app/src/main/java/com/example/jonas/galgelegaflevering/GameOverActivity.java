@@ -34,9 +34,12 @@ public class GameOverActivity extends Activity implements View.OnClickListener, 
 
         if (isGameWon) {
             gameOverText.setText("Tillyke du vandt! Din score var: " + getScore());
+            gameOverText.setVisibility(View.VISIBLE);
         } else {
             gameOverText.setText("Øv du tabte. Ordet var " + word);
+            gameOverText.setVisibility(View.VISIBLE);
             gameOverImage.setImageResource(R.drawable.forkert6);
+            gameOverImage.setVisibility(View.VISIBLE);
         }
 
         newGameButton.setOnClickListener(this);
@@ -49,8 +52,12 @@ public class GameOverActivity extends Activity implements View.OnClickListener, 
 
         if (v == newGameButton) {
             i.putExtra("playAgain", true);
+            gameOverText.setVisibility(View.GONE);
+            gameOverImage.setVisibility(View.GONE);
         } else if (v == endGameButton) {
             i.putExtra("playAgain", false);
+            gameOverText.setVisibility(View.GONE);
+            gameOverImage.setVisibility(View.GONE);
         }
 
         setResult(Activity.RESULT_OK, i);

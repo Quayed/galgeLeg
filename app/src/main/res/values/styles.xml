@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
     </style>
 
     <style name="ToolbarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -21,6 +22,11 @@
 
         <!-- Color of the Toolbar -->
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="SpecialButton">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColorPrimary">#fff</item>
     </style>
 
 </resources>

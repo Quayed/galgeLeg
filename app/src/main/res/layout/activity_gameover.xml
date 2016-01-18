@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/gameOverText"
         android:layout_gravity="center_horizontal"
-        android:textSize="@dimen/abc_text_size_title_material" />
+        android:textSize="@dimen/abc_text_size_title_material"
+        android:visibility="gone"/>
 
     <Button
         android:layout_width="fill_parent"
@@ -38,5 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gameOverImage"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
 </LinearLayout>
