@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 
 
         Parse.initialize(getApplicationContext());
-
+        Galgelogik.getInstance().updateHighscore();
     }
 
     private boolean isConnected() {

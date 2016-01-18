@@ -361,6 +361,18 @@ public class Galgelogik {
         this.minHighscore = minHighscore;
     }
 
+    public int getNumberOnHighscore(){
+        if(highscore == null)
+            return 0;
+        int score = getScore();
+        for(int i = 0; i < highscore.size(); i++){
+            if(score > highscore.get(i).getInt("score")){
+                return i + 1;
+            }
+        }
+        return 0;
+    }
+
     public void uploadToHighscore(String name, int score, int wordLength){
         ParseObject object = new ParseObject("highscore");
         object.put("name", name);

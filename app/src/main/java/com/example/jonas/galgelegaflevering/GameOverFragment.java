@@ -38,6 +38,10 @@ public class GameOverFragment extends Fragment implements View.OnClickListener{
 
         toMainMenuBtn = (Button) layout.findViewById(R.id.toMainMenu);
 
+        restartGameBtn.setOnClickListener(this);
+        changeWordLengthBtn.setOnClickListener(this);
+        toMainMenuBtn.setOnClickListener(this);
+
         if(Galgelogik.getInstance().erSpilletVundet()){
             gameOverStatus.setText("Du vandt spillet!");
         }else{
