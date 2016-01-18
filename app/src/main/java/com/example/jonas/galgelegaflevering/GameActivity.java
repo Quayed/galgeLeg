@@ -90,7 +90,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
 
         myCountDown = new CountDownTimer(100000, 1000){
             public void onTick(long millisUntilFinished){
@@ -109,6 +108,18 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         Galgelogik.getInstance().nulstil();
         updateViews();
         Galgelogik.getInstance().logStatus();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(this);
     }
 
     private void gameOver(){
@@ -259,8 +270,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
             builder.create().show();
         }
     }
-
-
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
