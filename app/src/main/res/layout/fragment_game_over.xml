@@ -21,7 +21,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
-        android:id="@+id/gameOverStatus" />
+        android:id="@+id/gameOverStatus"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
     <Button
         android:layout_width="fill_parent"

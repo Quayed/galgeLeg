@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:theme="@style/ToolbarTheme"
         android:background="@color/colorPrimary"
-        app:title="@string/toolbar_name" />
+        app:title="@string/toolbar_name"
+        android:elevation="4dp"/>
 
 
     <RelativeLayout

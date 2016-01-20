@@ -45,7 +45,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener{
         if(Galgelogik.getInstance().erSpilletVundet()){
             gameOverStatus.setText("Du vandt spillet!");
         }else{
-            gameOverStatus.setText("Du tabte spillet - prøv igen!");
+            gameOverStatus.setText("Du tabte spillet, ordet var " + Galgelogik.getInstance().getOrdet() + "s - prøv igen!");
         }
 
         return layout;

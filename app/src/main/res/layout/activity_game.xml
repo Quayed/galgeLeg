@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:theme="@style/ToolbarTheme"
         android:background="@color/colorPrimary"
+        android:elevation="4dp"
         app:title="@string/toolbar_name"/>
 
 
@@ -20,15 +21,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout"
         android:layout_below="@+id/main_toolbar">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_word"
-            android:id="@+id/newWordBtn"
-            android:layout_gravity="end"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
 
         <ImageView
             android:id="@+id/galgeView"
@@ -46,7 +38,8 @@
             android:layout_gravity="center_horizontal"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_below="@+id/galgeView"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            />
 
     </RelativeLayout>
 
@@ -137,13 +130,6 @@
                     android:layout_weight="1"
                     android:id="@+id/btn10"
                     />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/å"
-                    android:layout_weight="1"
-                    android:id="@+id/btn11"
-                    />
             </LinearLayout>
 
         <LinearLayout
@@ -214,20 +200,6 @@
                 android:layout_weight="1"
                 android:id="@+id/btn20"
                 />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/æ"
-                android:layout_weight="1"
-                android:id="@+id/btn21"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ø"
-                android:layout_weight="1"
-                android:id="@+id/btn22"
-                />
         </LinearLayout>
 
         <LinearLayout
@@ -289,14 +261,27 @@
     </LinearLayout>
     </RelativeLayout>
 
+    <Button
+        android:theme="@style/PrimaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_word"
+        android:id="@+id/newWordBtn"
+        android:layout_gravity="center_vertical"
+        android:layout_above="@+id/timeLeft"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/timeLeft"
         android:layout_above="@+id/relativeLayout"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_centerHorizontal="true"
+        android:textColor="#000"
+        />
 
 </RelativeLayout>
 

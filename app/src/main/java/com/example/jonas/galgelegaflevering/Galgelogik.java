@@ -1,11 +1,13 @@
 package com.example.jonas.galgelegaflevering;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -19,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-public class Galgelogik {
+public class Galgelogik{
     private ArrayList<String> muligeOrd = new ArrayList<String>();
     private String ordet;
     private ArrayList<String> brugteBogstaver = new ArrayList<String>();
@@ -338,8 +340,8 @@ public class Galgelogik {
             public void done(List<ParseObject> objects, com.parse.ParseException e) {
                 if (e == null) {
                     highscore = objects;
-                    minHighscore = objects.get(objects.size()-1).getInt("score");
-                    for(HighscoreSubscriber sub : highscoreSubscribers){
+                    minHighscore = objects.get(objects.size() - 1).getInt("score");
+                    for (HighscoreSubscriber sub : highscoreSubscribers) {
                         sub.onHighscoreUpdate(highscore);
                     }
                 } else {

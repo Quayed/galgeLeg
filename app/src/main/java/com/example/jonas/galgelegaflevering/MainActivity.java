@@ -21,6 +21,7 @@ import java.util.List;
 
 public class MainActivity extends Activity {
     private RelativeLayout loadingStatus;
+    private static MainActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +68,6 @@ public class MainActivity extends Activity {
             Toast.makeText(MainActivity.this, "Ordene kunne ikke hentes fra databasen", Toast.LENGTH_SHORT).show();
         }
 
-
-        Parse.initialize(getApplicationContext());
         Galgelogik.getInstance().updateHighscore();
     }
 

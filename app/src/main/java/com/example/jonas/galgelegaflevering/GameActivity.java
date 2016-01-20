@@ -11,12 +11,14 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -61,7 +63,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         keyboard.add((Button) findViewById(R.id.btn8));
         keyboard.add((Button) findViewById(R.id.btn9));
         keyboard.add((Button) findViewById(R.id.btn10));
-        keyboard.add((Button) findViewById(R.id.btn11));
         keyboard.add((Button) findViewById(R.id.btn12));
         keyboard.add((Button) findViewById(R.id.btn13));
         keyboard.add((Button) findViewById(R.id.btn14));
@@ -71,8 +72,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         keyboard.add((Button) findViewById(R.id.btn18));
         keyboard.add((Button) findViewById(R.id.btn19));
         keyboard.add((Button) findViewById(R.id.btn20));
-        keyboard.add((Button) findViewById(R.id.btn21));
-        keyboard.add((Button) findViewById(R.id.btn22));
         keyboard.add((Button) findViewById(R.id.btn23));
         keyboard.add((Button) findViewById(R.id.btn24));
         keyboard.add((Button) findViewById(R.id.btn25));
@@ -93,7 +92,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
 
         myCountDown = new CountDownTimer(100000, 1000){
             public void onTick(long millisUntilFinished){
-                timeLeft.setText("Tid tilbage: " + millisUntilFinished/1000 + "s");
+                timeLeft.setText(Html.fromHtml("Tid tilbage: <b>" + millisUntilFinished/1000 + "s</b>"));
+
                 Galgelogik.getInstance().setTimeLeft((int) millisUntilFinished / 1000);
             }
 
@@ -119,6 +119,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
     @Override
     protected void onPause(){
         super.onPause();
+        myCountDown.cancel();
         sensorManager.unregisterListener(this);
     }
 
@@ -176,6 +177,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
                     Galgelogik.getInstance().nulstil();
                     updateViews();
                     clearKeyboard();
+                    myCountDown.start();
                 }
             } else {
                 finish(); //back button was pressed on game over screen
@@ -196,6 +198,9 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
             Galgelogik.getInstance().nulstil();
             updateViews();
             clearKeyboard();
+            myCountDown.cancel();
+            myCountDown.start();
+            Toast.makeText(this, "Ord opdateret", Toast.LENGTH_SHORT).show();
         } else if (keyboard.contains(v)) {
             Button btn = (Button) v;
             System.out.println(btn.getText());

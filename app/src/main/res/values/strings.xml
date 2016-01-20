@@ -15,7 +15,6 @@
     <string name="i">I</string>
     <string name="o">O</string>
     <string name="p">P</string>
-    <string name="å">Å</string>
     <string name="a">A</string>
     <string name="s">S</string>
     <string name="d">D</string>
@@ -25,8 +24,6 @@
     <string name="j">J</string>
     <string name="k">K</string>
     <string name="l">L</string>
-    <string name="æ">Æ</string>
-    <string name="ø">Ø</string>
     <string name="z">Z</string>
     <string name="x">X</string>
     <string name="c">C</string>
