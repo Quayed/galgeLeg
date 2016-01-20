@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseObject;
 
@@ -40,8 +41,14 @@ public class HighscoreFragment extends Fragment implements HighscoreSubscriber {
         highscoreList = (ListView) layout.findViewById(R.id.highscoreList);
         loading = (ProgressBar) layout.findViewById(R.id.loading);
 
-        Galgelogik.getInstance().subscribeToHighscore(this);
-        Galgelogik.getInstance().updateHighscore();
+        if(App.isConnected(getActivity())) {
+            Galgelogik.getInstance().subscribeToHighscore(this);
+            Galgelogik.getInstance().updateHighscore();
+        } else{
+            Toast.makeText(getActivity(), "Intet internet - kunne ikke hente highscore", Toast.LENGTH_SHORT).show();
+            loading.setVisibility(View.GONE);
+            header.setVisibility(View.VISIBLE);
+        }
 
         return  layout;
     }
