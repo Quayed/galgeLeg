@@ -36,6 +36,7 @@ public class GameOverActivity extends Activity implements HighscoreSubscriber {
     }
 
     public void returnToGame(boolean playAgain){
+        Galgelogik.getInstance().setTimeLeft(0);
         Intent i = new Intent();
         i.putExtra("playAgain", playAgain);
         setResult(Activity.RESULT_OK, i);

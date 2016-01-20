@@ -80,8 +80,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         keyboard.add((Button) findViewById(R.id.btn28));
         keyboard.add((Button) findViewById(R.id.btn29));
 
-        Intent i = getIntent();
-
         newWordBtn.setOnClickListener(this);
         for (Button btn : keyboard) {
             btn.setOnClickListener(this);
@@ -90,7 +88,25 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        myCountDown = new CountDownTimer(100000, 1000){
+        Galgelogik.getInstance().nulstil();
+        updateViews();
+        Galgelogik.getInstance().logStatus();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        int startTime;
+        System.out.println(Galgelogik.getInstance().getTimeLeft());
+        if(Galgelogik.getInstance().getTimeLeft() == 0) {
+            startTime = 100000;
+            System.out.println("Hey hey");
+        }else{
+            System.out.println("Hello");
+            startTime = Galgelogik.getInstance().getTimeLeft()*1000;
+        }
+
+        myCountDown = new CountDownTimer(startTime, 1000){
             public void onTick(long millisUntilFinished){
                 timeLeft.setText(Html.fromHtml("Tid tilbage: <b>" + millisUntilFinished/1000 + "s</b>"));
 
@@ -102,17 +118,7 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
                 gameOver();
             }
         };
-
         myCountDown.start();
-
-        Galgelogik.getInstance().nulstil();
-        updateViews();
-        Galgelogik.getInstance().logStatus();
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
@@ -177,7 +183,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
                     Galgelogik.getInstance().nulstil();
                     updateViews();
                     clearKeyboard();
-                    myCountDown.start();
                 }
             } else {
                 finish(); //back button was pressed on game over screen
