@@ -53,9 +53,12 @@ public class HighscoreFragment extends Fragment implements HighscoreSubscriber {
         for (int i = 0; i < highscore.size(); i++) {
             highscores.add("" + (i+1) + ". " + highscore.get(i).getString("name") + ": " + highscore.get(i).getInt("score"));
         }
-        highscoreList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.custom_list, highscores));
+        if(getActivity() != null){
+            highscoreList.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.custom_list, highscores));
 
-        highscoreList.setVisibility(View.VISIBLE);
-        loading.setVisibility(View.GONE);
+            highscoreList.setVisibility(View.VISIBLE);
+            loading.setVisibility(View.GONE);
+        }
+
     }
 }

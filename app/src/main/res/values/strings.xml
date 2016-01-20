@@ -37,8 +37,6 @@
     <string name="word_list">Ord liste</string>
     <string name="highscore">Highscore</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="indtast_navn">Indtast navn:</string>
     <string name="save">Gem highscore</string>
     <string name="dont_save">Gem ikke</string>
@@ -46,4 +44,5 @@
     <string name="toMenu">Tilbage til menu</string>
     <string name="gameOver">Game Over</string>
     <string name="changeWordLength">Skift ordlængde</string>
+    <string name="ruleDescription">Galgelegsspillet går ud på at gætte et ord, på en valgfri længde.\nDe mulige ord er danske ord, uden \"æ\", \"ø\" og \"å\".\nMan må gætte forkert 7 gange før man taber.\nHvis man gætter ordet får man en score ud fra hvor mange bogstaver der var i ordet, hvor mange forsøg man brugte og hvor hurtig man var.\nHvis man ikke gætter ordet inden tiden løber ud taber man.</string>
 </resources>
