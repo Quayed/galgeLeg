@@ -88,16 +88,24 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+
+
         Galgelogik.getInstance().nulstil();
         updateViews();
         Galgelogik.getInstance().logStatus();
     }
 
+
+
     @Override
     protected void onResume(){
         super.onResume();
+        restartTimer();
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    private void restartTimer(){
         int startTime;
-        System.out.println(Galgelogik.getInstance().getTimeLeft());
         if(Galgelogik.getInstance().getTimeLeft() == 0) {
             startTime = 100000;
             System.out.println("Hey hey");
@@ -106,6 +114,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
             startTime = Galgelogik.getInstance().getTimeLeft()*1000;
         }
 
+        if(myCountDown != null)
+            myCountDown.cancel();
         myCountDown = new CountDownTimer(startTime, 1000){
             public void onTick(long millisUntilFinished){
                 timeLeft.setText(Html.fromHtml("Tid tilbage: <b>" + millisUntilFinished/1000 + "s</b>"));
@@ -119,7 +129,6 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
             }
         };
         myCountDown.start();
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
@@ -203,8 +212,8 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
             Galgelogik.getInstance().nulstil();
             updateViews();
             clearKeyboard();
-            myCountDown.cancel();
-            myCountDown.start();
+            Galgelogik.getInstance().setTimeLeft(0);
+            restartTimer();
             Toast.makeText(this, "Ord opdateret", Toast.LENGTH_SHORT).show();
         } else if (keyboard.contains(v)) {
             Button btn = (Button) v;
@@ -284,5 +293,11 @@ public class GameActivity extends Activity implements View.OnClickListener, Sens
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        Galgelogik.getInstance().setTimeLeft(0);
+        super.onBackPressed();
     }
 }
